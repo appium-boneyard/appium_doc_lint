@@ -4,7 +4,7 @@ class Appium::Lint
   describe H1Present do
     it 'detects missing h1' do
       rule     = H1Present.new data: '## hi'
-      expected = { 0 => [ rule.fail ]}
+      expected = { 0 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
@@ -22,7 +22,16 @@ class Appium::Lint
   describe H1Invalid do
     it 'detects invalid h1' do
       rule     = H1Invalid.new data: "hi\n==="
-      expected = { 1 => [ rule.fail ]}
+      expected = { 1 => [rule.fail] }
+      actual   = rule.call
+
+      expect(actual).to eq(expected)
+    end
+
+    it 'detects multiple invalid h1' do
+      rule     = H1Invalid.new data: "hi\n===\nbye\n======"
+      expected = { 1 => [rule.fail],
+                   3 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
@@ -40,7 +49,16 @@ class Appium::Lint
   describe H2Invalid do
     it 'detects invalid h2' do
       rule     = H2Invalid.new data: "hi\n---"
-      expected = { 1 => [ rule.fail ]}
+      expected = { 1 => [rule.fail] }
+      actual   = rule.call
+
+      expect(actual).to eq(expected)
+    end
+
+    it 'detects multiple invalid h2' do
+      rule     = H2Invalid.new data: "hi\n---\nbye\n-------"
+      expected = { 1 => [rule.fail],
+                   3 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
