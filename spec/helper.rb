@@ -1,3 +1,7 @@
 require 'rubygems'
 require 'rspec'
-require_relative '../lib/appium_doc_lint'
+# require_relative '../lib/appium_doc_lint'
+require_relative '../lib/appium_doc_lint/lint/base'
+require_relative '../lib/appium_doc_lint/lint/h1_present'
+require_relative '../lib/appium_doc_lint/lint/h1_invalid'
+require_relative '../lib/appium_doc_lint/lint/h2_invalid'

@@ -1,13 +1,5 @@
 module Appium
-  module Lint
-    class << self
-      def lint
-        'lint'
-      end
+  class Lint
 
-      def run
-        puts lint
-      end
-    end
   end
 end
