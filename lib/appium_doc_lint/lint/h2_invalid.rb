@@ -5,9 +5,16 @@ module Appium
     # check for three - to reduce false positives
     class H2Invalid < Base
       def call
+        previous_line = ''
+
         input.lines.each_with_index do |line, index|
-          invalid_h1 = !!line.match(/^---+\s*$/)
+          previous_line_not_empty = !previous_line.match(/^\s*$/)
+
+          # If the previous line is empty then --- triggers a line break
+          invalid_h1              = previous_line_not_empty && line.match(/^---+\s*$/)
           warn index if invalid_h1
+
+          previous_line = line
         end
 
         warnings

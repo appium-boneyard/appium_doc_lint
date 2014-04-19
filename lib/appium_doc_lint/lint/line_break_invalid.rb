@@ -5,9 +5,14 @@ module Appium
     # on Slate. They will cause problems such as null divs
     class LineBreakInvalid < Base
       def call
+        previous_line = ''
         input.lines.each_with_index do |line, index|
-          h4_h5_h6_present = !!line.match(/^--+\s*$/)
-          warn index if h4_h5_h6_present
+          # If the previous line isn't empty then --- createa a h2 not a line break.
+          previous_line_empty = previous_line.match(/^\s*$/)
+          line_break_present  = previous_line_empty && line.match(/^--+\s*$/)
+          warn index if line_break_present
+
+          previous_line = line
         end
 
         warnings
@@ -31,4 +36,6 @@ end
 => "<hr>\n"
 > md.render("--- ok")
 => "<p>--- ok</p>\n
+> md.render "hi\n--"
+=> "<h2>hi</h2>\n"
 =end

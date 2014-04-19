@@ -4,7 +4,7 @@ module Appium
   class Lint
     require_relative 'lint/base'
     require_relative 'lint/h1_invalid'
-    require_relative 'lint/h1_present'
+    require_relative 'lint/h1_missing'
     require_relative 'lint/h2_invalid'
     require_relative 'lint/h456_invalid'
     require_relative 'lint/line_break_invalid'
@@ -13,7 +13,7 @@ module Appium
     attr_reader :input
 
     def initialize
-      @rules = [H1Invalid, H1Present, H2Invalid, H456Invalid, LineBreakInvalid]
+      @rules = [H1Invalid, H1Missing, H2Invalid, H456Invalid, LineBreakInvalid]
     end
 
     def self.init_data opts={}, input
@@ -50,11 +50,13 @@ module Appium
         warnings = rule.new(@input).call
         unless warnings.empty?
           all_warnings.merge!(warnings) do |key, old_val, new_val|
+            # flatten to prevent { :a => [[1, 2], 2]}
             [old_val, new_val].flatten
           end
         end
       end
 
+      # sort by line number
       all_warnings.sort.to_h
     end
   end

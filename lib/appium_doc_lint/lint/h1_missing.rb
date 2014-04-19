@@ -7,7 +7,7 @@ module Appium
     #
     # The file should start with the h1. This rule will fail if the document
     # doesn't contain at least one h1
-    class H1Present < Base
+    class H1Missing < Base
       def call
         # either the doc has a h1 or it doesn't
         # attach warning to line 0
@@ -15,7 +15,7 @@ module Appium
         h1_missing ? warn(0) : warnings
       end
 
-      FAIL = 'h1 not present'
+      FAIL = 'h1 is missing'
 
       def fail
         FAIL

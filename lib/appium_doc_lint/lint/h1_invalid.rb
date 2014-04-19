@@ -5,6 +5,7 @@ module Appium
     # check for three = to reduce false positives
     class H1Invalid < Base
       def call
+        # === is always a h1 regardless of previous line
         input.lines.each_with_index do |line, index|
           invalid_h1 = !!line.match(/^===+\s*$/)
           warn index if invalid_h1
@@ -30,4 +31,6 @@ md = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: tr
 => "<p>hi\n =</p>\n"
 > md.render("hi\n= ")
 => "<h1>hi</h1>\n"
+> md.render("\n\n======")
+=> "<h1></h1>\n"
 =end

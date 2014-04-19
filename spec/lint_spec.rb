@@ -27,13 +27,13 @@ there 2
 ###### h6
 MARKDOWN
 
-      expected = { 0  => [H1Present::FAIL],
+      expected = { 0  => [H1Missing::FAIL],
                    1  => [H1Invalid::FAIL],
                    4  => [H1Invalid::FAIL],
-                   7  => [H2Invalid::FAIL, LineBreakInvalid::FAIL],
-                   10 => [H2Invalid::FAIL, LineBreakInvalid::FAIL],
+                   7  => [H2Invalid::FAIL],
+                   10 => [H2Invalid::FAIL],
                    12 => [LineBreakInvalid::FAIL],
-                   14 => [H2Invalid::FAIL, LineBreakInvalid::FAIL],
+                   14 => [LineBreakInvalid::FAIL],
                    16 => [H456Invalid::FAIL],
                    17 => [H456Invalid::FAIL],
                    18 => [H456Invalid::FAIL] }
@@ -44,17 +44,17 @@ MARKDOWN
     end
   end
 
-  describe H1Present do
+  describe H1Missing do
     it 'detects missing h1' do
-      rule     = H1Present.new data: '## hi'
+      rule     = H1Missing.new data: '## hi'
       expected = { 0 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
     end
 
-    it 'detects h1 present' do
-      rule     = H1Present.new data: '# hi'
+    it 'detects h1 missing' do
+      rule     = H1Missing.new data: '# hi'
       expected = {}
       actual   = rule.call
 
@@ -72,9 +72,10 @@ MARKDOWN
     end
 
     it 'detects multiple invalid h1' do
-      rule     = H1Invalid.new data: "hi\n===\nbye\n======"
+      rule     = H1Invalid.new data: "hi\n===\nbye\n======\n\n===="
       expected = { 1 => [rule.fail],
-                   3 => [rule.fail] }
+                   3 => [rule.fail],
+                   5 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
@@ -177,15 +178,18 @@ MARKDOWN
  -- not a break
  ------
 -- still not
+
 --
+
 ---
+
 -----
       MARKDOWN
 
       rule     = LineBreakInvalid.new data: data
-      expected = { 3 => [rule.fail],
-                   4 => [rule.fail],
-                   5 => [rule.fail] }
+      expected = { 4 => [rule.fail],
+                   6 => [rule.fail],
+                   8 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
