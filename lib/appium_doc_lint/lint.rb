@@ -30,7 +30,7 @@ module Appium
         file = File.expand_path(file)
 
         input.data  = File.read(file).freeze
-        input.lines = data.split(/\r?\n/).freeze
+        input.lines = input.data.split(/\r?\n/).freeze
         input.file  = file.freeze
       end
 
@@ -56,8 +56,22 @@ module Appium
         end
       end
 
+      return {} if all_warnings.empty?
+
       # sort by line number
-      all_warnings.sort.to_h
+      all_warnings = all_warnings.sort.to_h
+
+      # wrap with file path if available
+      input.file ? { input.file => all_warnings } : all_warnings
+    end
+
+    def glob dir_glob
+      results = {}
+      Dir.glob dir_glob do |markdown|
+        markdown = File.expand_path markdown
+        results.merge!(self.call(file: markdown))
+      end
+      results
     end
   end
 end

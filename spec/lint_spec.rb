@@ -2,6 +2,30 @@ require_relative 'helper'
 
 class Appium::Lint
   describe 'Lint' do
+    it 'processes globbed files' do
+      lint   = Appium::Lint.new
+      dir    = File.join(Dir.pwd, 'spec', 'data', '**', '*.md')
+
+      actual = lint.glob dir
+
+      # 1.md has no problems so it doesn't show up in expected failures
+      expected = { '0.md' => { 1 => [H1Missing::FAIL],
+                               2 => [H1Invalid::FAIL],
+                               5 => [H2Invalid::FAIL] },
+                   '3.md' => { 3 => [LineBreakInvalid::FAIL],
+                               7 => [LineBreakInvalid::FAIL] } }
+
+      # convert path/to/0.md to 0.md
+      actual.keys.each do |key|
+        new_key = File.basename key
+        actual[new_key] = actual[key]
+        actual.delete key
+      end
+
+      expect(actual).to eq(expected)
+    end
+
+
     it 'processes all rules without raising an exception' do
       lint = Appium::Lint.new
 
@@ -27,16 +51,16 @@ there 2
 ###### h6
 MARKDOWN
 
-      expected = { 0  => [H1Missing::FAIL],
-                   1  => [H1Invalid::FAIL],
-                   4  => [H1Invalid::FAIL],
-                   7  => [H2Invalid::FAIL],
-                   10 => [H2Invalid::FAIL],
-                   12 => [LineBreakInvalid::FAIL],
-                   14 => [LineBreakInvalid::FAIL],
-                   16 => [H456Invalid::FAIL],
+      expected = { 1  => [H1Missing::FAIL],
+                   2  => [H1Invalid::FAIL],
+                   5  => [H1Invalid::FAIL],
+                   8  => [H2Invalid::FAIL],
+                   11 => [H2Invalid::FAIL],
+                   13 => [LineBreakInvalid::FAIL],
+                   15 => [LineBreakInvalid::FAIL],
                    17 => [H456Invalid::FAIL],
-                   18 => [H456Invalid::FAIL] }
+                   18 => [H456Invalid::FAIL],
+                   19 => [H456Invalid::FAIL] }
 
       actual = lint.call data: markdown
 
@@ -47,7 +71,7 @@ MARKDOWN
   describe H1Missing do
     it 'detects missing h1' do
       rule     = H1Missing.new data: '## hi'
-      expected = { 0 => [rule.fail] }
+      expected = { 1 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
@@ -65,7 +89,7 @@ MARKDOWN
   describe H1Invalid do
     it 'detects invalid h1' do
       rule     = H1Invalid.new data: "hi\n==="
-      expected = { 1 => [rule.fail] }
+      expected = { 2 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
@@ -73,9 +97,9 @@ MARKDOWN
 
     it 'detects multiple invalid h1' do
       rule     = H1Invalid.new data: "hi\n===\nbye\n======\n\n===="
-      expected = { 1 => [rule.fail],
-                   3 => [rule.fail],
-                   5 => [rule.fail] }
+      expected = { 2 => [rule.fail],
+                   4 => [rule.fail],
+                   6 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
@@ -93,7 +117,7 @@ MARKDOWN
   describe H2Invalid do
     it 'detects invalid h2' do
       rule     = H2Invalid.new data: "hi\n---"
-      expected = { 1 => [rule.fail] }
+      expected = { 2 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
@@ -101,8 +125,8 @@ MARKDOWN
 
     it 'detects multiple invalid h2' do
       rule     = H2Invalid.new data: "hi\n---\nbye\n-------"
-      expected = { 1 => [rule.fail],
-                   3 => [rule.fail] }
+      expected = { 2 => [rule.fail],
+                   4 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
@@ -121,7 +145,7 @@ MARKDOWN
     it 'detects invalid h4, h5, h6' do
       ['#### h4', '##### h5', '###### h6'].each do |data|
         rule     = H456Invalid.new data: data
-        expected = { 0 => [rule.fail] }
+        expected = { 1 => [rule.fail] }
         actual   = rule.call
 
         expect(actual).to eq(expected)
@@ -140,9 +164,9 @@ MARKDOWN
       MARKDOWN
 
       rule     = H456Invalid.new data: data
-      expected = { 3 => [rule.fail],
-                   4 => [rule.fail],
-                   5 => [rule.fail] }
+      expected = { 4 => [rule.fail],
+                   5 => [rule.fail],
+                   6 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
@@ -166,7 +190,7 @@ MARKDOWN
     it 'detects invalid line breaks' do
       %w(-- --- ----).each do |data|
         rule     = LineBreakInvalid.new data: data
-        expected = { 0 => [rule.fail] }
+        expected = { 1 => [rule.fail] }
         actual   = rule.call
 
         expect(actual).to eq(expected)
@@ -187,9 +211,9 @@ MARKDOWN
       MARKDOWN
 
       rule     = LineBreakInvalid.new data: data
-      expected = { 4 => [rule.fail],
-                   6 => [rule.fail],
-                   8 => [rule.fail] }
+      expected = { 5 => [rule.fail],
+                   7 => [rule.fail],
+                   9 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)

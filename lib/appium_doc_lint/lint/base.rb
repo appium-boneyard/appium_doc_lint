@@ -11,12 +11,12 @@ module Appium
         @warnings = Hash.new []
       end
 
-      # Record a warning on a line number
+      # Record a warning on a zero indexed line number
       #
       # @param line_number [int] line number to warn on
       # @return [warnings]
       def warn line_number
-        warnings[line_number] += [fail]
+        warnings[line_number + 1] += [fail]
         warnings
       end
 
