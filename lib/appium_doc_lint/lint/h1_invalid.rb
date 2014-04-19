@@ -7,8 +7,8 @@ module Appium
       def call
         # === is always a h1 regardless of previous line
         input.lines.each_with_index do |line, index|
-          invalid_h1 = !!line.match(/^===+\s*$/)
-          warn index if invalid_h1
+          h1_invalid = !!line.match(/^===+\s*$/)
+          warn index if h1_invalid
         end
 
         warnings

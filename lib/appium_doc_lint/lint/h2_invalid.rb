@@ -8,11 +8,10 @@ module Appium
         previous_line = ''
 
         input.lines.each_with_index do |line, index|
-          previous_line_not_empty = !previous_line.match(/^\s*$/)
-
           # If the previous line is empty then --- triggers a line break
-          invalid_h1              = previous_line_not_empty && line.match(/^---+\s*$/)
-          warn index if invalid_h1
+          previous_line_not_empty = !previous_line.match(/^\s*$/)
+          h2_invalid              = previous_line_not_empty && line.match(/^---+\s*$/)
+          warn index if h2_invalid
 
           previous_line = line
         end

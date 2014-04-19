@@ -6,8 +6,8 @@ module Appium
     class H456Invalid < Base
       def call
         input.lines.each_with_index do |line, index|
-          h4_h5_h6_invalid = !!line.match(/^\#{4,6}[^#]/)
-          warn index if h4_h5_h6_invalid
+          h456_invalid = !!line.match(/^\#{4,6}[^#]/)
+          warn index if h456_invalid
         end
 
         warnings
