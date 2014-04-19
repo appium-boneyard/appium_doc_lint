@@ -73,10 +73,10 @@ class Appium::Lint
     end
   end
 
-  describe H456Present do
+  describe H456Invalid do
     it 'detects invalid h4, h5, h6' do
       ['#### h4', '##### h5', '###### h6'].each do |data|
-        rule     = H456Present.new data: data
+        rule     = H456Invalid.new data: data
         expected = { 0 => [rule.fail] }
         actual   = rule.call
 
@@ -92,9 +92,10 @@ class Appium::Lint
 #### h4
 ##### h5
 ###### h6
+ #### not actually a h4 due to leading space
       MARKDOWN
 
-      rule     = H456Present.new data: data
+      rule     = H456Invalid.new data: data
       expected = { 3 => [rule.fail],
                    4 => [rule.fail],
                    5 => [rule.fail] }
@@ -109,7 +110,52 @@ class Appium::Lint
 # h2
 # h3
       MARKDOWN
-      rule     = H456Present.new data: data
+      rule     = H456Invalid.new data: data
+      expected = {}
+      actual   = rule.call
+
+      expect(actual).to eq(expected)
+    end
+  end
+
+  describe LineBreakInvalid do
+    it 'detects invalid line breaks' do
+      %w(-- --- ----).each do |data|
+        rule     = LineBreakInvalid.new data: data
+        expected = { 0 => [rule.fail] }
+        actual   = rule.call
+
+        expect(actual).to eq(expected)
+      end
+    end
+
+    it 'detects multiple invalid line breaks' do
+      data = <<-MARKDOWN
+ -- not a break
+ ------
+-- still not
+--
+---
+-----
+      MARKDOWN
+
+      rule     = LineBreakInvalid.new data: data
+      expected = { 3 => [rule.fail],
+                   4 => [rule.fail],
+                   5 => [rule.fail] }
+      actual   = rule.call
+
+      expect(actual).to eq(expected)
+    end
+
+    it 'does not error on valid data' do
+      data = <<-MARKDOWN
+some --
+ ------
+markdown--
+-- examples
+      MARKDOWN
+      rule     = LineBreakInvalid.new data: data
       expected = {}
       actual   = rule.call
 

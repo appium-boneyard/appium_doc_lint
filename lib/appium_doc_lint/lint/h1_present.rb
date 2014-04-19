@@ -11,7 +11,7 @@ module Appium
       def call
         # either the doc has a h1 or it doesn't
         # attach warning to line 0
-        h1_missing = !data.match(/^\s*#[^#]/)
+        h1_missing = ! data.match(/^#[^#]/m)
         h1_missing ? warn(0) : warnings
       end
 
