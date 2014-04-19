@@ -6,8 +6,8 @@ module Appium
       #
       # Appium::Lint::Base.new data: 'some **markdown**'
       def initialize opts={}
-        @warnings = []
-        data = opts[:data]
+        @warnings = Hash.new []
+        data      = opts[:data]
         if data
           @data  = data.freeze
           @lines = data.split(/\r?\n/).freeze
@@ -22,6 +22,15 @@ module Appium
           @lines = @data.split(/\r?\n/).freeze
           @file  = file.freeze
         end
+      end
+
+      def warn line_number
+        warnings[line_number] += [ fail ]
+        warnings
+      end
+
+      def fail
+        raise NotImplementedError
       end
 
       def call

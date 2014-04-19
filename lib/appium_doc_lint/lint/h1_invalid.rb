@@ -5,8 +5,12 @@ module Appium
     # check for three = to reduce false positives
     class H1Invalid < Base
       def call
-        invalid_h1 = !! data.match(/^===+\s*$/)
-        invalid_h1 ? warnings << fail : warnings
+        lines.each_with_index do |line, index|
+          invalid_h1 = !!line.match(/^===+\s*$/)
+          invalid_h1 ? warn(index) : warnings
+        end
+
+        warnings
       end
 
       def fail
