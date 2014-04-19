@@ -24,6 +24,10 @@ module Appium
         end
       end
 
+      # Record a warning on a line number
+      #
+      # @param line_number [int] line number to warn on
+      # @return [warnings]
       def warn line_number
         warnings[line_number] += [ fail ]
         warnings

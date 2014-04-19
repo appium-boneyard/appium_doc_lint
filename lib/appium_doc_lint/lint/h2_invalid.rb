@@ -7,7 +7,7 @@ module Appium
       def call
         lines.each_with_index do |line, index|
           invalid_h1 = !!line.match(/^---+\s*$/)
-          invalid_h1 ? warn(index) : warnings
+          warn index if invalid_h1
         end
 
         warnings
