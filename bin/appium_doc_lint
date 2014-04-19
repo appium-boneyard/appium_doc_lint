@@ -10,4 +10,8 @@ def run_glob
 end
 
 result = run_glob
-puts result if result
+
+if result
+  puts result
+  exit 1
+end
