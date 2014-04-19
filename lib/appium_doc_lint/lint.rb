@@ -76,6 +76,7 @@ module Appium
 
     # Format data into a report
     def report data
+      return nil if data.nil? || data.empty?
       result = ''
       data.each do |file_name, analysis|
         result += "\n#{File.basename(file_name)}\n"
