@@ -45,13 +45,17 @@ module Appium
     def call opts={}
       @input = self.class.new_input opts
 
-      all_warnings = []
+      all_warnings = {}
       @rules.each do |rule|
         warnings = rule.new(@input).call
-        all_warnings << warnings unless warnings.empty?
+        unless warnings.empty?
+          all_warnings.merge!(warnings) do |key, old_val, new_val|
+            [old_val, new_val].flatten
+          end
+        end
       end
 
-      all_warnings
+      all_warnings.sort.to_h
     end
   end
 end

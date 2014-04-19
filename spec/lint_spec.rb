@@ -27,22 +27,18 @@ there 2
 ###### h6
 MARKDOWN
 
-      expected = [{ 1 => [H1Invalid::FAIL],
-                    4 => [H1Invalid::FAIL] },
-                  { 0 => [H1Present::FAIL] },
-                  { 7  => [H2Invalid::FAIL],
-                    10 => [H2Invalid::FAIL],
-                    14 => [H2Invalid::FAIL] },
-                  { 16 => [H456Invalid::FAIL],
-                    17 => [H456Invalid::FAIL],
-                    18 => [H456Invalid::FAIL] },
-                  { 7  => [LineBreakInvalid::FAIL],
-                    10 => [LineBreakInvalid::FAIL],
-                    12 => [LineBreakInvalid::FAIL],
-                    14 => [LineBreakInvalid::FAIL] }]
+      expected = { 0  => [H1Present::FAIL],
+                   1  => [H1Invalid::FAIL],
+                   4  => [H1Invalid::FAIL],
+                   7  => [H2Invalid::FAIL, LineBreakInvalid::FAIL],
+                   10 => [H2Invalid::FAIL, LineBreakInvalid::FAIL],
+                   12 => [LineBreakInvalid::FAIL],
+                   14 => [H2Invalid::FAIL, LineBreakInvalid::FAIL],
+                   16 => [H456Invalid::FAIL],
+                   17 => [H456Invalid::FAIL],
+                   18 => [H456Invalid::FAIL] }
 
-
-      actual   = lint.call data: markdown
+      actual = lint.call data: markdown
 
       expect(actual).to eq(expected)
     end
