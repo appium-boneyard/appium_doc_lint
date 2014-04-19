@@ -15,7 +15,8 @@ class Appium::Lint
                    '3.md' => { 3  => [LineBreakInvalid::FAIL],
                                7  => [LineBreakInvalid::FAIL],
                                9  => [H1Multiple::FAIL],
-                               11 => [H456Invalid::FAIL] } }
+                               11 => [H456Invalid::FAIL],
+                               21  => [H1Multiple::FAIL],} }
 
       # convert path/to/0.md to 0.md
       actual.keys.each do |key|
@@ -43,6 +44,7 @@ class Appium::Lint
   7: #{LineBreakInvalid::FAIL}
   9: #{H1Multiple::FAIL}
   11: #{H456Invalid::FAIL}
+  21: #{H1Multiple::FAIL}
 REPORT
 
       expect(actual).to eq(expected)
