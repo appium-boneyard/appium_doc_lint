@@ -5,6 +5,12 @@ require 'rake'
 require 'date'
 require 'posix/spawn'
 
+# rspec
+require 'rspec'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new :spec
+task :default => :spec
+
 # Defines gem name.
 def repo_name; 'appium_doc_lint'; end # the rubygem name
 def gh_name; 'appium_doc_lint'; end # the name as used on github.com
