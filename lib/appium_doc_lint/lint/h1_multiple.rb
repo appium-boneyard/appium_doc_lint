@@ -5,7 +5,13 @@ module Appium
     class H1Multiple < Base
       def call
         h1_count = 0
+        in_code_block = false
         input.lines.each_with_index do |line, index|
+          code_block = !! line.match(/^```/)
+          in_code_block = ! in_code_block if code_block
+
+          next if in_code_block
+
           h1_detected = !! line.match(/^#[^#]/)
           if h1_detected # only warn if h1 detected
             h1_count += 1
