@@ -1,5 +1,12 @@
 require_relative 'helper'
 
+describe Appium::Lint do
+  it 'processes all rules without raising an exception' do
+    lint = Appium::Lint.new
+    lint.call data: '**markdown**'
+  end
+end
+
 class Appium::Lint
   describe H1Present do
     it 'detects missing h1' do
