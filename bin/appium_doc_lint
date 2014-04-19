@@ -2,4 +2,12 @@
 require 'rubygems'
 require_relative '../lib/appium_doc_lint'
 
-Appium::Lint::run
+def run_glob
+  lint = Appium::Lint.new
+  dir  = File.join(Dir.pwd, '**', '*.md')
+
+  lint.report lint.glob dir
+end
+
+result = run_glob
+puts result if result

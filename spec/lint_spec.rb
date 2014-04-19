@@ -25,6 +25,25 @@ class Appium::Lint
       expect(actual).to eq(expected)
     end
 
+    it 'reports globbed files' do
+      lint   = Appium::Lint.new
+      dir    = File.join(Dir.pwd, 'spec', 'data', '**', '*.md')
+
+      actual = lint.report lint.glob dir
+      expected = (<<REPORT).strip
+0.md
+  1: #{H1Missing::FAIL}
+  2: #{H1Invalid::FAIL}
+  5: #{H2Invalid::FAIL}
+
+3.md
+  3: #{LineBreakInvalid::FAIL}
+  7: #{LineBreakInvalid::FAIL}
+REPORT
+
+      expect(actual).to eq(expected)
+    end
+
 
     it 'processes all rules without raising an exception' do
       lint = Appium::Lint.new

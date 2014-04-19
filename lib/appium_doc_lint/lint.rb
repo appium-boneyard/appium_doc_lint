@@ -73,5 +73,17 @@ module Appium
       end
       results
     end
+
+    # Format data into a report
+    def report data
+      result = ''
+      data.each do |file_name, analysis|
+        result += "\n#{File.basename(file_name)}\n"
+        analysis.each do |line_number, warning|
+          result += "  #{line_number}: #{warning.join(',')}\n"
+        end
+      end
+      result.strip
+    end
   end
 end
