@@ -5,8 +5,8 @@ module Appium
     # Slate works best with h1, h2, or h3
     class H456Invalid < Base
       def call
-        lines.each_with_index do |line, index|
-          h4_h5_h6_invalid = !! line.match(/^\#{4,6}[^#]/)
+        input.lines.each_with_index do |line, index|
+          h4_h5_h6_invalid = !!line.match(/^\#{4,6}[^#]/)
           warn index if h4_h5_h6_invalid
         end
 

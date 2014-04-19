@@ -5,8 +5,8 @@ module Appium
     # on Slate. They will cause problems such as null divs
     class LineBreakInvalid < Base
       def call
-        lines.each_with_index do |line, index|
-          h4_h5_h6_present = !! line.match(/^--+\s*$/)
+        input.lines.each_with_index do |line, index|
+          h4_h5_h6_present = !!line.match(/^--+\s*$/)
           warn index if h4_h5_h6_present
         end
 

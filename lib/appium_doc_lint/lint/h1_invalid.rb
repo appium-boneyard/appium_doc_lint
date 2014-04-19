@@ -5,7 +5,7 @@ module Appium
     # check for three = to reduce false positives
     class H1Invalid < Base
       def call
-        lines.each_with_index do |line, index|
+        input.lines.each_with_index do |line, index|
           invalid_h1 = !!line.match(/^===+\s*$/)
           warn index if invalid_h1
         end

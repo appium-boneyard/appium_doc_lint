@@ -1,27 +1,14 @@
 module Appium
   class Lint
+    # noinspection RubyArgCount
     class Base
-      attr_reader :data, :lines, :file, :warnings
+      attr_reader :input, :warnings
       # Appium::Lint::Base.new file: '/path/to/file'
       #
       # Appium::Lint::Base.new data: 'some **markdown**'
-      def initialize opts={}
+      def initialize opts
+        @input    = opts.is_a?(OpenStruct) ? opts : Appium::Lint.new_input(opts)
         @warnings = Hash.new []
-        data      = opts[:data]
-        if data
-          @data  = data.freeze
-          @lines = data.split(/\r?\n/).freeze
-          @file  = nil
-        else
-          file = opts[:file]
-          raise 'File path must be provided' unless file
-          raise "File must exist and be readable #{file}" unless File.exist?(file) && File.readable?(file)
-
-          file   = File.expand_path(file)
-          @data  = File.read(file).freeze
-          @lines = @data.split(/\r?\n/).freeze
-          @file  = file.freeze
-        end
       end
 
       # Record a warning on a line number
@@ -29,7 +16,7 @@ module Appium
       # @param line_number [int] line number to warn on
       # @return [warnings]
       def warn line_number
-        warnings[line_number] += [ fail ]
+        warnings[line_number] += [fail]
         warnings
       end
 
