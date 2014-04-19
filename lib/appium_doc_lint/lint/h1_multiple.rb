@@ -7,9 +7,10 @@ module Appium
         h1_count = 0
         input.lines.each_with_index do |line, index|
           h1_detected = !! line.match(/^#[^#]/)
-          h1_count += 1 if h1_detected
-
-          warn index if h1_count > 1
+          if h1_detected # only warn if h1 detected
+            h1_count += 1
+            warn index if h1_count > 1
+          end
         end
 
         warnings

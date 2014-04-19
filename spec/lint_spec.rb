@@ -2,7 +2,7 @@ require_relative 'helper'
 
 class Appium::Lint
   describe 'Lint' do
-    it 'processes globbed files' do
+    it 'processes globbed files using all lint rules' do
       lint = Appium::Lint.new
       dir  = File.join(Dir.pwd, 'spec', 'data', '**', '*.md')
 
@@ -12,9 +12,10 @@ class Appium::Lint
       expected = { '0.md' => { 1 => [H1Missing::FAIL],
                                2 => [H1Invalid::FAIL],
                                5 => [H2Invalid::FAIL] },
-                   '3.md' => { 3 => [LineBreakInvalid::FAIL],
-                               7 => [LineBreakInvalid::FAIL],
-                               9 => [H1Multiple::FAIL] } }
+                   '3.md' => { 3  => [LineBreakInvalid::FAIL],
+                               7  => [LineBreakInvalid::FAIL],
+                               9  => [H1Multiple::FAIL],
+                               11 => [H456Invalid::FAIL] } }
 
       # convert path/to/0.md to 0.md
       actual.keys.each do |key|
@@ -26,7 +27,7 @@ class Appium::Lint
       expect(actual).to eq(expected)
     end
 
-    it 'reports globbed files' do
+    it 'reports globbed files using all lint rules' do
       lint = Appium::Lint.new
       dir  = File.join(Dir.pwd, 'spec', 'data', '**', '*.md')
 
@@ -41,6 +42,7 @@ class Appium::Lint
   3: #{LineBreakInvalid::FAIL}
   7: #{LineBreakInvalid::FAIL}
   9: #{H1Multiple::FAIL}
+  11: #{H456Invalid::FAIL}
 REPORT
 
       expect(actual).to eq(expected)
