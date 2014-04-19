@@ -46,7 +46,10 @@ module Appium
       @input = self.class.new_input opts
 
       all_warnings = []
-      @rules.each { |rule| all_warnings << rule.new(@input).call }
+      @rules.each do |rule|
+        warnings = rule.new(@input).call
+        all_warnings << warnings unless warnings.empty?
+      end
 
       all_warnings
     end

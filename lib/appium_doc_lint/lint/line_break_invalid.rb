@@ -13,8 +13,10 @@ module Appium
         warnings
       end
 
+      FAIL = '`--` and `---` line breaks must not be used. Delete them.'
+
       def fail
-        '`--` and `---` line breaks must not be used. Delete them.'
+        FAIL
       end
     end
   end

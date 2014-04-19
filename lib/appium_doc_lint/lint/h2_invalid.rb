@@ -13,8 +13,10 @@ module Appium
         warnings
       end
 
+      FAIL = 'h2 must not use --- underline syntax. Use ## instead'
+
       def fail
-        'h2 must not use --- underline syntax. Use ## instead'
+        FAIL
       end
     end
   end

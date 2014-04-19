@@ -15,8 +15,10 @@ module Appium
         h1_missing ? warn(0) : warnings
       end
 
+      FAIL = 'h1 not present'
+
       def fail
-        'h1 not present'
+        FAIL
       end
     end
   end

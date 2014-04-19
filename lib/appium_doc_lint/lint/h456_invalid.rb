@@ -13,8 +13,10 @@ module Appium
         warnings
       end
 
+      FAIL = 'h4, h5, h6 should not be used. Use h1, h2 or h3.'
+
       def fail
-        'h4, h5, h6 should not be used. Use h1, h2 or h3.'
+        FAIL
       end
     end
   end

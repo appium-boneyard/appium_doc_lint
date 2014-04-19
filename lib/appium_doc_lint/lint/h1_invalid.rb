@@ -13,8 +13,10 @@ module Appium
         warnings
       end
 
+      FAIL = 'h1 must not use === underline syntax. Use # instead'
+
       def fail
-        'h1 must not use === underline syntax. Use # instead'
+        FAIL
       end
     end
   end

@@ -1,13 +1,53 @@
 require_relative 'helper'
 
-describe Appium::Lint do
-  it 'processes all rules without raising an exception' do
-    lint = Appium::Lint.new
-    lint.call data: '**markdown**'
-  end
-end
-
 class Appium::Lint
+  describe 'Lint' do
+    it 'processes all rules without raising an exception' do
+      lint = Appium::Lint.new
+
+      markdown = <<MARKDOWN
+hi
+====
+
+hi 2
+=====
+
+there
+------
+
+there 2
+--------
+
+--
+
+---
+
+#### h4
+##### h5
+###### h6
+MARKDOWN
+
+      expected = [{ 1 => [H1Invalid::FAIL],
+                    4 => [H1Invalid::FAIL] },
+                  { 0 => [H1Present::FAIL] },
+                  { 7  => [H2Invalid::FAIL],
+                    10 => [H2Invalid::FAIL],
+                    14 => [H2Invalid::FAIL] },
+                  { 16 => [H456Invalid::FAIL],
+                    17 => [H456Invalid::FAIL],
+                    18 => [H456Invalid::FAIL] },
+                  { 7  => [LineBreakInvalid::FAIL],
+                    10 => [LineBreakInvalid::FAIL],
+                    12 => [LineBreakInvalid::FAIL],
+                    14 => [LineBreakInvalid::FAIL] }]
+
+
+      actual   = lint.call data: markdown
+
+      expect(actual).to eq(expected)
+    end
+  end
+
   describe H1Present do
     it 'detects missing h1' do
       rule     = H1Present.new data: '## hi'
