@@ -44,6 +44,11 @@ REPORT
       expect(actual).to eq(expected)
     end
 
+    it 'empty report is falsey' do
+      lint   = Appium::Lint.new
+      actual = !! lint.report({})
+      expect(actual).to eq(false)
+    end
 
     it 'processes all rules without raising an exception' do
       lint = Appium::Lint.new
