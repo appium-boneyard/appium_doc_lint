@@ -83,7 +83,9 @@ module Appium
           result += "  #{line_number}: #{warning.join(',')}\n"
         end
       end
-      result.strip
+      result.strip!
+
+      result.empty? ? nil : result
     end
   end
 end
