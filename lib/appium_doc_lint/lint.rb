@@ -71,7 +71,8 @@ module Appium
         markdown = File.expand_path markdown
         results.merge!(self.call(file: markdown))
       end
-      results
+      # glob order is system dependent so sort the results.
+      results.sort.to_h
     end
 
     # Format data into a report
