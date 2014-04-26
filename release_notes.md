@@ -1,3 +1,9 @@
+#### v0.0.3 2014-04-19
+
+- [293f87b](https://github.com/appium/appium_doc_lint/commit/293f87b56667e1c0d81b069cc9b700be521a965a) Release 0.0.4
+- [54813cf](https://github.com/appium/appium_doc_lint/commit/54813cf164f33866d7643260498d115f40411d0f) Add link check for invalid hyperlinks
+
+
 #### v0.0.2 2014-04-19
 
 - [5bcd5c5](https://github.com/appium/appium_doc_lint/commit/5bcd5c58d25dace3ec356394d54f0a5d988602dd) Release 0.0.3
