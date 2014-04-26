@@ -1,3 +1,9 @@
+#### v0.0.6 2014-04-26
+
+- [0007207](https://github.com/appium/appium_doc_lint/commit/000720755c1745d293e09e6ca6099a0d5bd50202) Release 0.0.6
+- [768759c](https://github.com/appium/appium_doc_lint/commit/768759c26b73ccfdabd043bfcdc7de0cb1ecdc94) Include relative path in output
+
+
 #### v0.0.5 2014-04-26
 
 - [f79fbcd](https://github.com/appium/appium_doc_lint/commit/f79fbcd4ecb8cec0c0e6c5aa81919c35ac30af0d) Release 0.0.5
