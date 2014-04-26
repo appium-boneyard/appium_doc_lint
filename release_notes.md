@@ -1,3 +1,10 @@
+#### v0.0.5 2014-04-26
+
+- [f79fbcd](https://github.com/appium/appium_doc_lint/commit/f79fbcd4ecb8cec0c0e6c5aa81919c35ac30af0d) Release 0.0.5
+- [b4063f8](https://github.com/appium/appium_doc_lint/commit/b4063f8132acf97ac3cd4af0aeb8a09a0f1c6222) Include the broken link in the warning message
+- [13df5bf](https://github.com/appium/appium_doc_lint/commit/13df5bf8498a4838e994ca4e3c1f767bb491e40a) Fix release notes
+
+
 #### v0.0.4 2014-04-26
 
 - [293f87b](https://github.com/appium/appium_doc_lint/commit/293f87b56667e1c0d81b069cc9b700be521a965a) Release 0.0.4
