@@ -15,8 +15,9 @@ module Appium
       #
       # @param line_number [int] line number to warn on
       # @return [warnings]
-      def warn line_number
-        warnings[line_number + 1] += [fail]
+      def warn line_number, extra=nil
+        message = extra ? fail + ' ' + extra : fail
+        warnings[line_number + 1] += [message]
         warnings
       end
 

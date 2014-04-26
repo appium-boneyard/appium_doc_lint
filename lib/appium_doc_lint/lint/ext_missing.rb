@@ -15,16 +15,17 @@ module Appium
           # /(?<!!) -- negative look behind. excludes image links
           match_data = line.match(/(?<!!) \[ ( [^\[]* ) \] \( ( [^)\/]+ ) \)/x)
           next unless match_data # skip nil matches
+          full        = match_data[0]
           link_text   = match_data[1]
           link_target = match_data[2]
 
           if link_target && !link_target.include?('/')
             ext = File.extname link_target
             if ext.empty?
-              warn index
+              warn index, full
             else
               ext, hash = ext.split '#'
-              warn index if ext.empty?
+              warn index, full if ext.empty?
             end
           end
         end
@@ -32,7 +33,7 @@ module Appium
         warnings
       end
 
-      FAIL = 'Relative markdown links must have an extension. [readme](readme.md)'
+      FAIL = 'Relative markdown links must have an extension'
 
       def fail
         FAIL

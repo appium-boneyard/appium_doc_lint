@@ -17,7 +17,7 @@ class Appium::Lint
                                9  => [H1Multiple::FAIL],
                                11 => [H456Invalid::FAIL],
                                21 => [H1Multiple::FAIL],
-                               23 => [ExtMissing::FAIL] } }
+                               23 => [ExtMissing::FAIL + ' [ok](ok#ok)'] } }
 
       # convert path/to/0.md to 0.md
       actual.keys.each do |key|
@@ -46,7 +46,7 @@ class Appium::Lint
   9: #{H1Multiple::FAIL}
   11: #{H456Invalid::FAIL}
   21: #{H1Multiple::FAIL}
-  23: #{ExtMissing::FAIL}
+  23: #{ExtMissing::FAIL + ' [ok](ok#ok)'}
 REPORT
 
       expect(actual).to eq(expected)
@@ -293,9 +293,9 @@ markdown--
 [intro](intro#start)
       MARKDOWN
       rule     = ExtMissing.new data: data
-      expected = { 1 => [rule.fail],
-                   2 => [rule.fail],
-                   3 => [rule.fail] }
+      expected = { 1 => [rule.fail + ' [link to read](readme)'],
+                   2 => [rule.fail + ' [ok](ok#ok)'],
+                   3 => [rule.fail + ' [intro](intro#start)'] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
