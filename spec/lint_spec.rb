@@ -35,12 +35,12 @@ class Appium::Lint
 
       actual   = lint.report lint.glob dir
       expected = (<<REPORT).strip
-0.md
+./spec/data/0.md
   1: #{H1Missing::FAIL}
   2: #{H1Invalid::FAIL}
   5: #{H2Invalid::FAIL}
 
-3.md
+./spec/data/sub/3.md
   3: #{LineBreakInvalid::FAIL}
   7: #{LineBreakInvalid::FAIL}
   9: #{H1Multiple::FAIL}

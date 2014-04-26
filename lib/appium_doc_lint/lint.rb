@@ -82,7 +82,8 @@ module Appium
       return nil if data.nil? || data.empty?
       result = ''
       data.each do |file_name, analysis|
-        result += "\n#{File.basename(file_name)}\n"
+        rel_path = File.join('.', File.expand_path(file_name).sub(Dir.pwd, ''))
+        result += "\n#{rel_path}\n"
         analysis.each do |line_number, warning|
           result += "  #{line_number}: #{warning.join(',')}\n"
         end
