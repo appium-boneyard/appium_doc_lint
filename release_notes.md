@@ -1,3 +1,9 @@
+#### v0.0.7 2014-04-26
+
+- [9a9eaa9](https://github.com/appium/appium_doc_lint/commit/9a9eaa9854c2f16409d06333b120937995a42af0) Release 0.0.7
+- [2499981](https://github.com/appium/appium_doc_lint/commit/24999811c3e9a65a84fe720f0731615e06512918) Default encoding to UTF_8
+
+
 #### v0.0.6 2014-04-26
 
 - [0007207](https://github.com/appium/appium_doc_lint/commit/000720755c1745d293e09e6ca6099a0d5bd50202) Release 0.0.6
