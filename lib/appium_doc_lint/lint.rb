@@ -3,6 +3,7 @@ require 'ostruct'
 module Appium
   class Lint
     require_relative 'lint/base'
+    require_relative 'lint/ext_missing'
     require_relative 'lint/h1_invalid'
     require_relative 'lint/h1_multiple'
     require_relative 'lint/h1_missing'
@@ -14,7 +15,7 @@ module Appium
     attr_reader :input
 
     def initialize
-      @rules = [H1Missing, H1Multiple, H1Invalid, H2Invalid, H456Invalid, LineBreakInvalid]
+      @rules = [ExtMissing, H1Missing, H1Multiple, H1Invalid, H2Invalid, H456Invalid, LineBreakInvalid]
     end
 
     def self.init_data opts={}, input

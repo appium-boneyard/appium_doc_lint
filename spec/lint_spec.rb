@@ -16,7 +16,8 @@ class Appium::Lint
                                7  => [LineBreakInvalid::FAIL],
                                9  => [H1Multiple::FAIL],
                                11 => [H456Invalid::FAIL],
-                               21  => [H1Multiple::FAIL],} }
+                               21 => [H1Multiple::FAIL],
+                               23 => [ExtMissing::FAIL] } }
 
       # convert path/to/0.md to 0.md
       actual.keys.each do |key|
@@ -45,6 +46,7 @@ class Appium::Lint
   9: #{H1Multiple::FAIL}
   11: #{H456Invalid::FAIL}
   21: #{H1Multiple::FAIL}
+  23: #{ExtMissing::FAIL}
 REPORT
 
       expect(actual).to eq(expected)
@@ -276,6 +278,37 @@ markdown--
 -- examples
       MARKDOWN
       rule     = LineBreakInvalid.new data: data
+      expected = {}
+      actual   = rule.call
+
+      expect(actual).to eq(expected)
+    end
+  end
+
+  describe ExtMissing do
+    it 'detects missing extensions in markdown links' do
+      data = <<-MARKDOWN
+[link to read](readme)
+[ok](ok#ok)
+[intro](intro#start)
+      MARKDOWN
+      rule     = ExtMissing.new data: data
+      expected = { 1 => [rule.fail],
+                   2 => [rule.fail],
+                   3 => [rule.fail] }
+      actual   = rule.call
+
+      expect(actual).to eq(expected)
+    end
+
+    it 'detects accepts valid links' do
+      data = <<-MARKDOWN
+[link to read](readme.md)
+[README](README.md)
+[intro](intro.md#start)
+[example](https://example.com/)
+      MARKDOWN
+      rule     = ExtMissing.new data: data
       expected = {}
       actual   = rule.call
 
