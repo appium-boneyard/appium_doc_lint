@@ -1,3 +1,12 @@
+#### v0.0.9 2014-04-27
+
+- [3c4661e](https://github.com/appium/appium_doc_lint/commit/3c4661ebe628ab2b320f77f53b53b537b8c1723e) Release 0.0.9
+- [0d55946](https://github.com/appium/appium_doc_lint/commit/0d5594616ede92898f49e11605426b16028cbedf) Allow linking to self
+- [a22a980](https://github.com/appium/appium_doc_lint/commit/a22a980d5b93383c5d737463114551a490ddb877) Update api docs helpers
+- [238e46d](https://github.com/appium/appium_doc_lint/commit/238e46dee3efcb359240a3a3e66ed58c1c39e3f4) Add valid link to test
+- [58fa4c9](https://github.com/appium/appium_doc_lint/commit/58fa4c9520ade838a9ebb5c9dfa5cab7fdee1ca3) Update comment
+
+
 #### v0.0.8 2014-04-27
 
 - [2d3bfe1](https://github.com/appium/appium_doc_lint/commit/2d3bfe186204455c1c19f714748d369345216d75) Release 0.0.8
