@@ -23,7 +23,7 @@ module Appium
           # process docs/en/filename.md#testing links
           link_target = trim_link link_target
 
-          no_slash= !link_target.include?('/')
+          no_slash = !link_target.include?('/')
           not_link_to_self = link_target != '#'
 
           if link_target && no_slash && not_link_to_self
