@@ -37,12 +37,18 @@ module Appium
         warnings
       end
 
+      # from github.com/appium/api-docs/lib/api_docs.rb
       def invalid_ext? ext, link_target
         ext.empty? && ! link_target.end_with?('/')
       end
 
+      # from github.com/appium/api-docs/lib/api_docs.rb
+      # process docs/en/filename.md#testing links
+      # handle relative links [getting started](../../README.md)
       def trim_link link_target
-        trim = link_target.start_with?('docs/') && ! link_target.end_with?('/')
+        return link_target if link_target.end_with?('/')
+        # trim doc and relative
+        trim = link_target.start_with?('docs/') || link_target.start_with?('../')
         trim ? File.basename(link_target) : link_target
       end
 
