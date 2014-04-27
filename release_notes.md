@@ -1,3 +1,10 @@
+#### v0.0.8 2014-04-27
+
+- [2d3bfe1](https://github.com/appium/appium_doc_lint/commit/2d3bfe186204455c1c19f714748d369345216d75) Release 0.0.8
+- [2b9a5d1](https://github.com/appium/appium_doc_lint/commit/2b9a5d1b434eb85fb03a1e91930c45b2fd65d4a9) Detect missing links in docs/ folder
+- [1171ec6](https://github.com/appium/appium_doc_lint/commit/1171ec69632382382cedbf7596dec06aac7f3168) Add link to folder to test
+
+
 #### v0.0.7 2014-04-26
 
 - [9a9eaa9](https://github.com/appium/appium_doc_lint/commit/9a9eaa9854c2f16409d06333b120937995a42af0) Release 0.0.7
