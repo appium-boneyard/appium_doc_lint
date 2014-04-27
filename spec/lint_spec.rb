@@ -310,6 +310,7 @@ markdown--
 [intro](intro.md#start)
 [example](https://example.com/)
 [testing](docs/en/)
+[getting started doc](../../README.md)
       MARKDOWN
       rule     = ExtMissing.new data: data
       expected = {}
