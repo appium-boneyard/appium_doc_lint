@@ -311,6 +311,7 @@ markdown--
 [example](https://example.com/)
 [testing](docs/en/)
 [getting started doc](../../README.md)
+[link to self is valid](#)
       MARKDOWN
       rule     = ExtMissing.new data: data
       expected = {}
