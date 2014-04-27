@@ -291,11 +291,13 @@ markdown--
 [link to read](readme)
 [ok](ok#ok)
 [intro](intro#start)
+[testing](docs/en/ok) en should be .md
       MARKDOWN
       rule     = ExtMissing.new data: data
       expected = { 1 => [rule.fail + ' [link to read](readme)'],
                    2 => [rule.fail + ' [ok](ok#ok)'],
-                   3 => [rule.fail + ' [intro](intro#start)'] }
+                   3 => [rule.fail + ' [intro](intro#start)'],
+                   4 => [rule.fail + ' [testing](docs/en/ok)'] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
