@@ -291,7 +291,7 @@ markdown--
 [link to read](readme)
 [ok](ok#ok)
 [intro](intro#start)
-[testing](docs/en/ok) en should be .md
+[testing](docs/en/ok) ok should be ok.md
       MARKDOWN
       rule     = ExtMissing.new data: data
       expected = { 1 => [rule.fail + ' [link to read](readme)'],
