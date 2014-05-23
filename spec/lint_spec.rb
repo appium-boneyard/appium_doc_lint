@@ -117,6 +117,28 @@ MARKDOWN
 
       expect(actual).to eq(expected)
     end
+
+    it 'does not error on code blocks' do
+      data = <<'DATA'
+# title
+
+```ruby
+```
+
+```ruby
+```
+
+Here's a Ruby example:
+
+```ruby
+# Ruby example
+```
+DATA
+      rule     = H1Multiple.new data: data
+      expected = {}
+      actual   = rule.call
+      expect(actual).to eq(expected)
+    end
   end
 
   describe H1Missing do
