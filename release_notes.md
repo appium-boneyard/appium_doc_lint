@@ -1,3 +1,11 @@
+#### v0.0.10 2014-07-01
+
+- [d1288b7](https://github.com/appium/appium_doc_lint/commit/d1288b77382f91334535671949717074f0e2d086) Release 0.0.10
+- [e055255](https://github.com/appium/appium_doc_lint/commit/e05525508a0b48cd5ffa32bc69d23b77a48be56d) Check that file isn't a directory
+- [56e3127](https://github.com/appium/appium_doc_lint/commit/56e31274068ef80e0f61d999bae06be1730785b2) Add test for multiple code blocks
+- [ee0ee4d](https://github.com/appium/appium_doc_lint/commit/ee0ee4d068c982152e22fd9a67d291d1a0ba463d) Add example one time scan
+
+
 #### v0.0.9 2014-04-27
 
 - [3c4661e](https://github.com/appium/appium_doc_lint/commit/3c4661ebe628ab2b320f77f53b53b537b8c1723e) Release 0.0.9
