@@ -29,6 +29,7 @@ module Appium
         file = opts[:file]
         raise 'File path must be provided' unless file
         raise "File must exist and be readable #{file}" unless File.exist?(file) && File.readable?(file)
+        raise 'File must not be a dir' if File.directory?(file)
         file = File.expand_path(file)
 
         input.data  = File.read(file).freeze
@@ -70,6 +71,7 @@ module Appium
     def glob dir_glob
       results = {}
       Dir.glob dir_glob do |markdown|
+        next if File.directory?(markdown)
         markdown = File.expand_path markdown
         results.merge!(self.call(file: markdown))
       end
