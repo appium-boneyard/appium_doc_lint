@@ -4,18 +4,17 @@ module Appium
   class Lint
     require_relative 'lint/base'
     require_relative 'lint/ext_missing'
-    require_relative 'lint/h1_invalid'
-    require_relative 'lint/h1_multiple'
-    require_relative 'lint/h1_missing'
+    require_relative 'lint/h2_multiple'
+    require_relative 'lint/h2_missing'
     require_relative 'lint/h2_invalid'
-    require_relative 'lint/h456_invalid'
+    require_relative 'lint/h156_invalid'
     require_relative 'lint/line_break_invalid'
 
     # OpenStruct.new data: '', lines: '', file: ''
     attr_reader :input
 
     def initialize
-      @rules = [ExtMissing, H1Missing, H1Multiple, H1Invalid, H2Invalid, H456Invalid, LineBreakInvalid]
+      @rules = [ExtMissing, H2Missing, H2Multiple, H2Invalid, H156Invalid, LineBreakInvalid]
     end
 
     def self.init_data opts={}, input
