@@ -1,3 +1,10 @@
+#### v0.0.11 2014-07-03
+
+- [131313d](https://github.com/appium/appium_doc_lint/commit/131313d78172c25f1ab3a8665374cbcfab115380) Release 0.0.11
+- [e83e284](https://github.com/appium/appium_doc_lint/commit/e83e2848a4c208a0f628403bb8df9ebc915b347b) Merge pull request #2 from moizjv/master
+- [0b9e8da](https://github.com/appium/appium_doc_lint/commit/0b9e8daf2c85b72fa7fee116c6be79d991d9e7a7) Changing lint rules to accomodate new doc changes in appium
+
+
 #### v0.0.10 2014-07-01
 
 - [d1288b7](https://github.com/appium/appium_doc_lint/commit/d1288b77382f91334535671949717074f0e2d086) Release 0.0.10
