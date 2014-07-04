@@ -9,14 +9,14 @@ class Appium::Lint
       actual   = lint.glob dir
 
       # 1.md has no problems so it doesn't show up in expected failures
-      expected = { '0.md' => { 1 => [H1Missing::FAIL],
-                               2 => [H1Invalid::FAIL],
+      expected = { '0.md' => { 1 => [H2Missing::FAIL],
+                               2 => [H156Invalid::FAIL],
                                5 => [H2Invalid::FAIL] },
                    '3.md' => { 3  => [LineBreakInvalid::FAIL],
                                7  => [LineBreakInvalid::FAIL],
-                               9  => [H1Multiple::FAIL],
-                               11 => [H456Invalid::FAIL],
-                               21 => [H1Multiple::FAIL],
+                               9  => [H2Multiple::FAIL],
+                               11 => [H156Invalid::FAIL],
+                               21 => [H2Multiple::FAIL],
                                23 => [ExtMissing::FAIL + ' [ok](ok#ok)'] } }
 
       # convert path/to/0.md to 0.md
@@ -36,16 +36,16 @@ class Appium::Lint
       actual   = lint.report lint.glob dir
       expected = (<<REPORT).strip
 ./spec/data/0.md
-  1: #{H1Missing::FAIL}
-  2: #{H1Invalid::FAIL}
+  1: #{H2Missing::FAIL}
+  2: #{H156Invalid::FAIL}
   5: #{H2Invalid::FAIL}
 
 ./spec/data/sub/3.md
   3: #{LineBreakInvalid::FAIL}
   7: #{LineBreakInvalid::FAIL}
-  9: #{H1Multiple::FAIL}
-  11: #{H456Invalid::FAIL}
-  21: #{H1Multiple::FAIL}
+  9: #{H2Multiple::FAIL}
+  11: #{H156Invalid::FAIL}
+  21: #{H2Multiple::FAIL}
   23: #{ExtMissing::FAIL + ' [ok](ok#ok)'}
 REPORT
 
@@ -83,16 +83,15 @@ there 2
 ###### h6
 MARKDOWN
 
-      expected = { 1  => [H1Missing::FAIL],
-                   2  => [H1Invalid::FAIL],
-                   5  => [H1Invalid::FAIL],
+      expected = { 1  => [H2Missing::FAIL],
+                   2  => [H156Invalid::FAIL],
+                   5  => [H156Invalid::FAIL],
                    8  => [H2Invalid::FAIL],
                    11 => [H2Invalid::FAIL],
                    13 => [LineBreakInvalid::FAIL],
                    15 => [LineBreakInvalid::FAIL],
-                   17 => [H456Invalid::FAIL],
-                   18 => [H456Invalid::FAIL],
-                   19 => [H456Invalid::FAIL] }
+                   18 => [H156Invalid::FAIL],
+                   19 => [H156Invalid::FAIL] }
 
       actual = lint.call data: markdown
 
@@ -100,9 +99,9 @@ MARKDOWN
     end
   end
 
-  describe H1Multiple do
-    it 'detects extra h1s' do
-      rule     = H1Multiple.new data: "# hi\n# bye\n#test"
+  describe H2Multiple do
+    it 'detects extra h2s' do
+      rule     = H2Multiple.new data: "## hi\n## bye\n##test"
       expected = { 2 => [rule.fail],
                    3 => [rule.fail] }
       actual   = rule.call
@@ -110,8 +109,8 @@ MARKDOWN
       expect(actual).to eq(expected)
     end
 
-    it 'does not error on one h1' do
-      rule     = H1Multiple.new data: '# hi'
+    it 'does not error on one h2' do
+      rule     = H2Multiple.new data: '## hi'
       expected = {}
       actual   = rule.call
 
@@ -134,52 +133,24 @@ Here's a Ruby example:
 # Ruby example
 ```
 DATA
-      rule     = H1Multiple.new data: data
+      rule     = H2Multiple.new data: data
       expected = {}
       actual   = rule.call
       expect(actual).to eq(expected)
     end
   end
 
-  describe H1Missing do
+  describe H2Missing do
     it 'detects missing h1' do
-      rule     = H1Missing.new data: '## hi'
+      rule     = H2Missing.new data: '### hi'
       expected = { 1 => [rule.fail] }
       actual   = rule.call
 
       expect(actual).to eq(expected)
     end
 
-    it 'does not error on valid h1' do
-      rule     = H1Missing.new data: '# hi'
-      expected = {}
-      actual   = rule.call
-
-      expect(actual).to eq(expected)
-    end
-  end
-
-  describe H1Invalid do
-    it 'detects invalid h1' do
-      rule     = H1Invalid.new data: "hi\n==="
-      expected = { 2 => [rule.fail] }
-      actual   = rule.call
-
-      expect(actual).to eq(expected)
-    end
-
-    it 'detects multiple invalid h1' do
-      rule     = H1Invalid.new data: "hi\n===\nbye\n======\n\n===="
-      expected = { 2 => [rule.fail],
-                   4 => [rule.fail],
-                   6 => [rule.fail] }
-      actual   = rule.call
-
-      expect(actual).to eq(expected)
-    end
-
-    it 'detects valid h1' do
-      rule     = H1Invalid.new data: '# hi'
+    it 'does not error on valid h2' do
+      rule     = H2Missing.new data: '## hi'
       expected = {}
       actual   = rule.call
 
@@ -197,7 +168,7 @@ DATA
     end
 
     it 'detects multiple invalid h2' do
-      rule     = H2Invalid.new data: "hi\n---\nbye\n-------"
+      rule     = H2Invalid.new data: "hi\n---\nbye\n-----\n\n-------"
       expected = { 2 => [rule.fail],
                    4 => [rule.fail] }
       actual   = rule.call
@@ -214,10 +185,10 @@ DATA
     end
   end
 
-  describe H456Invalid do
-    it 'detects invalid h4, h5, h6' do
-      ['#### h4', '##### h5', '###### h6'].each do |data|
-        rule     = H456Invalid.new data: data
+  describe H156Invalid do
+    it 'detects invalid h1, h5, h6' do
+      ['# h1', '##### h5', '###### h6'].each do |data|
+        rule     = H156Invalid.new data: data
         expected = { 1 => [rule.fail] }
         actual   = rule.call
 
@@ -225,7 +196,7 @@ DATA
       end
     end
 
-    it 'detects multiple invalid h4, h5, h6' do
+    it 'detects multiple invalid h1, h5, h6' do
       data = <<-MARKDOWN
 # h1
 ## h2
@@ -234,10 +205,11 @@ DATA
 ##### h5
 ###### h6
  #### not actually a h4 due to leading space
+
       MARKDOWN
 
-      rule     = H456Invalid.new data: data
-      expected = { 4 => [rule.fail],
+      rule     = H156Invalid.new data: data
+      expected = { 1 => [rule.fail],
                    5 => [rule.fail],
                    6 => [rule.fail] }
       actual   = rule.call
@@ -245,13 +217,13 @@ DATA
       expect(actual).to eq(expected)
     end
 
-    it 'does not error on h1, h2, h3' do
+    it 'does not error on h2, h3, h4' do
       data = <<-MARKDOWN
-# h1
-# h2
-# h3
+## h2
+### h3
+#### h4
       MARKDOWN
-      rule     = H456Invalid.new data: data
+      rule     = H156Invalid.new data: data
       expected = {}
       actual   = rule.call
 
